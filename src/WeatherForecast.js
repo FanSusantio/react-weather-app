@@ -14,18 +14,25 @@ export default function WeatherForecast(props) {
   }
 
   if (loaded) {
-    console.log(forecast);
     return (
       <div className="WeatherForecast">
         <div className="row">
-          <div className="col">
-            <WeatherForecastDay data={forecast[0]} />
-          </div>
+          {forecast.map(function (dailyForecast, index) {
+            if (index < 5) {
+              return (
+                <div className="col" key={index}>
+                  <WeatherForecastDay data={dailyForecast} />
+                </div>
+              );
+            } else {
+              return null;
+            }
+          })}
         </div>
       </div>
     );
   } else {
-    const apiKey = "300c5b69978f9b056c3bb931ff9c185d";
+    const apiKey = "a74b2bfdc6455b21c1aa51ce43d055d0";
     let latitude = props.coord.lat;
     let longitude = props.coord.lon;
     let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
